@@ -1,0 +1,9 @@
+{
+  "id": "@openpen/spotlight",
+  "name": "Spotlight",
+  "version": "1.0.0",
+  "author": "OpenPen",
+  "description": "Dims the screen and keeps a soft circular spotlight following the cursor to focus the audience's attention. Adjustable radius, dim level, and soft edge.",
+  "minAppVersion": "1.0.0",
+  "renderer": "dist/renderer.js"
+}

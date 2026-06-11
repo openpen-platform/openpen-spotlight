@@ -1,0 +1,10 @@
+{
+  "name": "Spotlight",
+  "description": "Dims the screen and keeps a soft circular spotlight following the cursor to focus the audience's attention. Adjustable radius, dim level, and soft edge.",
+  "toggle": "Spotlight",
+  "settings": {
+    "radius": "Radius",
+    "dimOpacity": "Dim level",
+    "softEdge": "Soft edge"
+  }
+}
