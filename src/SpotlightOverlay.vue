@@ -2,6 +2,7 @@
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useModuleContext } from '@openpen/module-api'
 import { MODULE_ID } from './module-id'
+import { clampDimOpacity, clampRadius } from './spotlight-settings'
 import {
   backdropColor,
   maskGradient,
@@ -51,8 +52,8 @@ function stopTracking() {
 function apply(s: SpotlightSettings) {
   enabled.value = s.enabled ?? false
   config.value = {
-    radius: s.radius,
-    dimOpacity: s.dimOpacity,
+    radius: clampRadius(s.radius),
+    dimOpacity: clampDimOpacity(s.dimOpacity),
     softEdge: s.softEdge,
   }
 }

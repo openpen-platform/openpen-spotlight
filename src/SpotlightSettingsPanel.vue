@@ -3,6 +3,15 @@ import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useModuleContext } from '@openpen/module-api'
 import { AppSlider, AppToggle } from '@openpen/module-api/uikit'
 import { MODULE_ID } from './module-id'
+import { vSliderName, vSwitchState } from './a11y-workarounds'
+import {
+  DIM_MAX,
+  DIM_MIN,
+  RADIUS_MAX,
+  RADIUS_MIN,
+  clampDimOpacity,
+  clampRadius,
+} from './spotlight-settings'
 
 interface SpotlightSettings {
   radius: number
@@ -19,12 +28,12 @@ let unsub: (() => void) | null = null
 
 onMounted(() => {
   const s = ctx.getSettings<SpotlightSettings>()
-  radius.value = s.radius ?? 150
-  dimOpacity.value = s.dimOpacity ?? 0.8
+  radius.value = clampRadius(s.radius)
+  dimOpacity.value = clampDimOpacity(s.dimOpacity)
   softEdge.value = s.softEdge ?? true
   unsub = ctx.onSettingsChange<SpotlightSettings>((next) => {
-    radius.value = next.radius
-    dimOpacity.value = next.dimOpacity
+    radius.value = clampRadius(next.radius)
+    dimOpacity.value = clampDimOpacity(next.dimOpacity)
     softEdge.value = next.softEdge
   })
 })
@@ -60,33 +69,39 @@ async function setSoftEdge(value: boolean) {
       <div class="spotlight-row-label">{{ radiusLabel }}</div>
       <div class="spotlight-row-value">{{ radius }}px</div>
     </div>
-    <AppSlider
-      :model-value="radius"
-      :min="60"
-      :max="400"
-      :step="1"
-      @update:model-value="setRadius"
-    />
+    <div v-slider-name="radiusLabel">
+      <AppSlider
+        :model-value="radius"
+        :min="RADIUS_MIN"
+        :max="RADIUS_MAX"
+        :step="1"
+        @update:model-value="setRadius"
+      />
+    </div>
 
     <div class="spotlight-row">
       <div class="spotlight-row-label">{{ dimOpacityLabel }}</div>
       <div class="spotlight-row-value">{{ dimPercent }}%</div>
     </div>
-    <AppSlider
-      :model-value="dimPercent"
-      :min="10"
-      :max="95"
-      :step="1"
-      @update:model-value="setDimPercent"
-    />
+    <div v-slider-name="dimOpacityLabel">
+      <AppSlider
+        :model-value="dimPercent"
+        :min="Math.round(DIM_MIN * 100)"
+        :max="Math.round(DIM_MAX * 100)"
+        :step="1"
+        @update:model-value="setDimPercent"
+      />
+    </div>
 
     <div class="spotlight-row">
       <div class="spotlight-row-label">{{ softEdgeLabel }}</div>
-      <AppToggle
-        :model-value="softEdge"
-        :aria-label="softEdgeLabel"
-        @update:model-value="setSoftEdge"
-      />
+      <div v-switch-state>
+        <AppToggle
+          :model-value="softEdge"
+          :aria-label="softEdgeLabel"
+          @update:model-value="setSoftEdge"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -113,7 +128,8 @@ async function setSoftEdge(value: boolean) {
 
 .spotlight-row-value {
   font-size: 12.5px;
-  color: var(--openpen-color-text-secondary);
+  /* --openpen-color-text-secondary is not a uikit token (the declaration was dropped); text-dim is. */
+  color: var(--openpen-color-text-dim);
   font-variant-numeric: tabular-nums;
 }
 </style>

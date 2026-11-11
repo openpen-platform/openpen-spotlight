@@ -1,6 +1,6 @@
 {
   "name": "openpen-plugin-spotlight",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Spotlight overlay for OpenPen — dims the screen except a soft circle that follows the cursor.",
   "type": "module",
   "private": true,

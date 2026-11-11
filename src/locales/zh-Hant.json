@@ -6,5 +6,8 @@
     "radius": "半徑",
     "dimOpacity": "變暗程度",
     "softEdge": "柔邊"
+  },
+  "options": {
+    "label": "聚光燈選項"
   }
 }

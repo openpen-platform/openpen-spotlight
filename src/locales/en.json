@@ -6,5 +6,8 @@
     "radius": "Radius",
     "dimOpacity": "Dim level",
     "softEdge": "Soft edge"
+  },
+  "options": {
+    "label": "Spotlight options"
   }
 }
