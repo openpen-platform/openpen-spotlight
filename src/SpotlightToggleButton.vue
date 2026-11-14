@@ -14,9 +14,14 @@
  */
 import { computed, inject, onMounted, onUnmounted, ref, watch } from 'vue'
 import { MODAL_MANAGER_KEY, SNAP_EDGE_KEY, useModuleContext } from '@openpen/module-api'
-import { AppButtonDropdown, AppSlider, AppToggle } from '@openpen/module-api/uikit'
+import {
+  AppButtonDropdown,
+  AppPopoverPanel,
+  AppPopoverRow,
+  AppSlider,
+  AppToggle,
+} from '@openpen/module-api/uikit'
 import { MODULE_ID } from './module-id'
-import { vSliderName, vSwitchState } from './a11y-workarounds'
 import {
   DIM_DEFAULT,
   DIM_MAX,
@@ -123,106 +128,40 @@ async function setSoftEdge(value: boolean) {
       </svg>
     </template>
     <template #popover-content>
-      <div class="spotlight-popover" data-testid="controlbar-spotlight-popover">
-        <div class="spotlight-popover-head">
-          <span class="spotlight-popover-title">{{ radiusLabel }}</span>
-          <span class="spotlight-popover-value" data-testid="spotlight-radius-value">{{ radius }}px</span>
-        </div>
-        <div v-slider-name="radiusLabel">
+      <AppPopoverPanel data-testid="controlbar-spotlight-popover">
+        <AppPopoverRow :label="radiusLabel">
           <AppSlider
             :model-value="radius"
             :min="RADIUS_MIN"
             :max="RADIUS_MAX"
             :step="1"
-            track-height="8px"
-            track-radius="4px"
-            thumb-width="24px"
-            thumb-height="16px"
-            thumb-radius="8px"
+            :value-label="`${radius}px`"
+            :ariaLabel="radiusLabel"
             data-testid="spotlight-radius-slider"
             @update:model-value="setRadius"
           />
-        </div>
-
-        <div class="spotlight-popover-head spotlight-popover-gap">
-          <span class="spotlight-popover-title">{{ dimLabel }}</span>
-          <span class="spotlight-popover-value" data-testid="spotlight-dim-value">{{ dimPercent }}%</span>
-        </div>
-        <div v-slider-name="dimLabel">
+        </AppPopoverRow>
+        <AppPopoverRow :label="dimLabel">
           <AppSlider
             :model-value="dimPercent"
             :min="Math.round(DIM_MIN * 100)"
             :max="Math.round(DIM_MAX * 100)"
             :step="1"
-            track-height="8px"
-            track-radius="4px"
-            thumb-width="24px"
-            thumb-height="16px"
-            thumb-radius="8px"
+            :value-label="`${dimPercent}%`"
+            :ariaLabel="dimLabel"
             data-testid="spotlight-dim-slider"
             @update:model-value="setDimPercent"
           />
-        </div>
-
-        <div class="spotlight-popover-head spotlight-popover-gap">
-          <span class="spotlight-popover-title">{{ softEdgeLabel }}</span>
-          <div v-switch-state>
-            <AppToggle
-              :model-value="softEdge"
-              :aria-label="softEdgeLabel"
-              data-testid="spotlight-soft-edge-toggle"
-              @update:model-value="setSoftEdge"
-            />
-          </div>
-        </div>
-      </div>
+        </AppPopoverRow>
+        <AppPopoverRow :label="softEdgeLabel">
+          <AppToggle
+            :model-value="softEdge"
+            :aria-label="softEdgeLabel"
+            data-testid="spotlight-soft-edge-toggle"
+            @update:model-value="setSoftEdge"
+          />
+        </AppPopoverRow>
+      </AppPopoverPanel>
     </template>
   </AppButtonDropdown>
 </template>
-
-<style scoped>
-/*
- * Popover layout mirrors the host's stroke-width popup (same local copy as the
- * arrow plugin): the host keeps its popover styles in a global stylesheet
- * plugins cannot import, so this is built on the public --openpen-* tokens.
- * Scoped styles still apply: the slot content is rendered by this component
- * even though the popover teleports it.
- *
- * One column in both bar orientations, so vertical bars need no variant;
- * AppPopover places it beside the bar. min-width gives AppSlider
- * (width: 100%) a reference width.
- */
-.spotlight-popover {
-  min-width: 180px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.spotlight-popover-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.spotlight-popover-gap {
-  margin-top: 8px;
-}
-
-.spotlight-popover-title {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  /* text-muted fails 4.5:1 on the popup surface (2.45-3.66:1 measured); text-dim passes. */
-  color: var(--openpen-color-text-dim);
-}
-
-.spotlight-popover-value {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--openpen-color-text-primary);
-  font-variant-numeric: tabular-nums;
-}
-</style>
