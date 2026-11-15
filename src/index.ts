@@ -47,22 +47,12 @@ type SpotlightSettings = z.infer<typeof settingsSchema>
 // The shortcut handler has no context argument, so setup() hands it over.
 let activeCtx: ModuleSetupContext | null = null
 
-// The host sends one shortcut trigger to every window, and every overlay
-// window (one per display) runs the handler, so one key press calls
-// toggleSpotlight once per display. A toggle must not flip back and forth:
-// a window that sees `enabled` already changed within DEDUPE_MS treats its
-// trigger as the same key press and does nothing. A window whose trigger
-// arrives before the change has propagated reads the same old value and
-// writes the same new one, so the result is still a single flip. A genuine
-// second press within the window is dropped, which reads as a debounce.
-const DEDUPE_MS = 400
-let lastEnabled = false
-let lastChangeAt = Number.NEGATIVE_INFINITY
+// The host delivers one shortcut press to exactly one window, so the handler
+// runs once per press and needs no de-duplication of its own.
 
 /** Flip the persisted `enabled` flag; every window (and the control-bar button) follows via onSettingsChange. */
 function toggleSpotlight(): void {
   if (!activeCtx) return
-  if (Date.now() - lastChangeAt < DEDUPE_MS) return
   const enabled = activeCtx.getSettings<SpotlightSettings>().enabled ?? false
   void activeCtx.updateSettings<SpotlightSettings>({ enabled: !enabled })
 }
@@ -74,16 +64,7 @@ export default defineModule({
 
   setup(ctx) {
     activeCtx = ctx
-    lastEnabled = ctx.getSettings<SpotlightSettings>().enabled ?? false
-    const stop = ctx.onSettingsChange<SpotlightSettings>((next) => {
-      const enabled = next.enabled ?? false
-      if (enabled !== lastEnabled) {
-        lastEnabled = enabled
-        lastChangeAt = Date.now()
-      }
-    })
     ctx.onDispose(() => {
-      stop()
       if (activeCtx === ctx) activeCtx = null
     })
   },

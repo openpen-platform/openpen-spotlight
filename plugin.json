@@ -4,7 +4,7 @@
   "version": "1.1.0",
   "author": "OpenPen",
   "description": "Dims the screen and keeps a soft circular spotlight following the cursor to focus the audience's attention. Adjustable radius, dim level, and soft edge.",
-  "minAppVersion": "1.0.0",
+  "minAppVersion": "1.6.0",
   "renderer": "dist/renderer.js",
   "changelog": [
     "Control-bar caret opens a panel to adjust radius, dim level and soft edge on the spot",
