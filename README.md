@@ -5,6 +5,12 @@ A spotlight for [OpenPen](https://github.com/openpen-platform/openpen).
 Dims the screen and keeps a soft circular spotlight following the cursor, so
 the audience looks where you are pointing.
 
+<p align="center">
+  <img src=".github/readme-demo.gif" alt="OpenPen Spotlight: the screen is dimmed and a round spotlight follows the cursor from meeting to meeting on a weekly calendar, then the panel shrinks the spotlight and darkens the dimmed area" width="800" />
+</p>
+
+<p align="center"><sub>Background: FullCalendar by Adam Shaw (https://fullcalendar.io), MIT License (https://opensource.org/license/mit). The schedule is fictional.</sub></p>
+
 ## Install
 
 Requires OpenPen 1.0.0 or later.
