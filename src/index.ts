@@ -12,7 +12,6 @@
  *     the persisted `enabled` flag, with a caret that opens a popover for
  *     radius / dim level / soft edge.
  *   - A global shortcut that toggles `enabled`.
- *   - A settings panel (`ui.settings.panels`) for radius / dim level / soft edge.
  *
  * All visual math (mask gradient string, feather band, backdrop colour) lives
  * in the side-effect-free `spotlight-mask.ts` so it stays unit-testable.
@@ -25,7 +24,6 @@ export { MODULE_ID } from './module-id'
 import { MODULE_ID } from './module-id'
 import SpotlightOverlay from './SpotlightOverlay.vue'
 import SpotlightToggleButton from './SpotlightToggleButton.vue'
-import SpotlightSettingsPanel from './SpotlightSettingsPanel.vue'
 import { DIM_DEFAULT, RADIUS_DEFAULT } from './spotlight-settings'
 import en from './locales/en.json'
 import zhHant from './locales/zh-Hant.json'
@@ -102,18 +100,6 @@ export default defineModule({
         },
         userCustomizable: true,
         handler: toggleSpotlight,
-      },
-    ],
-    settingsPanels: [
-      {
-        id: 'spotlight-settings',
-        label: {
-          en: 'Spotlight',
-          'zh-Hant': '聚光燈',
-          'zh-Hans': '聚光灯',
-          ja: 'スポットライト',
-        },
-        component: SpotlightSettingsPanel,
       },
     ],
     locales: {

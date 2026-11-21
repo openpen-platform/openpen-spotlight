@@ -47,10 +47,10 @@ npx openpen-cli plugin add .
 The spotlight starts at the center of the screen until the cursor first moves.
 The spotlight is off until you turn it on, and the on/off state is saved with the other settings.
 
-## Settings
+## Saved values
 
-The same options are in the control-bar panel described above, and in
-OpenPen's settings under the **Spotlight** panel.
+The options are set only from the control-bar panel described above. Values
+saved earlier from OpenPen's settings window carry over and show in the panel.
 
 | Setting | Values | Default | Description |
 | --- | --- | --- | --- |
@@ -61,8 +61,7 @@ OpenPen's settings under the **Spotlight** panel.
 A saved value outside the allowed range is clamped back into it.
 
 The on/off state is also stored as a setting (`enabled`, default off). It is
-changed with the control bar button or the shortcut rather than in the settings
-panel. The shortcut can be rebound under **Settings → Shortcuts**.
+changed with the control bar button or the shortcut. The shortcut can be rebound under **Settings → Shortcuts**.
 
 ## License
 

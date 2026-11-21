@@ -18,18 +18,17 @@ describe('spotlight module contract', () => {
     expect(module.version).toBe('1.1.0')
   })
 
-  it('contributes htmlOverlays, controlBar, and settingsPanels', () => {
+  it('contributes htmlOverlays and controlBar, and no settings-window panel', () => {
     const c = module.contributes!
     expect(c.htmlOverlays?.map((o) => o.id)).toContain('spotlight')
     expect(c.controlBar?.map((b) => b.id)).toContain('spotlight')
-    expect(c.settingsPanels?.map((p) => p.id)).toContain('spotlight-settings')
+    expect(c.settingsPanels).toBeUndefined()
   })
 
   it('mounts a component on each contributed surface', () => {
     const c = module.contributes!
     expect(c.htmlOverlays?.[0]?.component).toBeTruthy()
     expect(c.controlBar?.[0]?.component).toBeTruthy()
-    expect(c.settingsPanels?.[0]?.component).toBeTruthy()
   })
 })
 
