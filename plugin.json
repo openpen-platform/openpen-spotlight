@@ -3,12 +3,28 @@
   "name": "Spotlight",
   "version": "1.1.0",
   "author": "OpenPen",
-  "description": "Dims the screen and keeps a soft circular spotlight following the cursor to focus the audience's attention. Adjustable radius, dim level, and soft edge.",
+  "description": "Dims the screen and follows the cursor with a soft circular spotlight to focus attention; radius, dim level and soft edge are adjustable.",
+  "descriptionLocalized": {
+    "zh-Hant": "畫面變暗，只留一圈跟著游標移動的柔和聚光，把觀眾的視線帶到重點。",
+    "zh-Hans": "画面变暗，只留一圈跟着光标移动的柔和聚光，把观众的视线带到重点。"
+  },
+  "icon": ".github/marketplace/icon.png",
+  "screenshots": [
+    {
+      "src": ".github/marketplace/cover.png",
+      "alt": "A calendar is dimmed except for a spotlight on the Design review event."
+    },
+    {
+      "src": ".github/readme-demo.gif",
+      "alt": "The spotlight follows the cursor, then the panel changes its radius and dim level."
+    }
+  ],
   "minAppVersion": "1.6.0",
   "renderer": "dist/renderer.js",
   "changelog": [
     "Control-bar caret opens a panel to adjust radius, dim level and soft edge on the spot",
     "New shortcut (Ctrl+Alt+S, ⌘⌥S on macOS) to turn the spotlight on and off",
-    "Out-of-range saved values are clamped instead of discarding your settings"
+    "Out-of-range saved values are clamped instead of discarding your settings",
+    "Marketplace icon, cover and Chinese descriptions"
   ]
 }
